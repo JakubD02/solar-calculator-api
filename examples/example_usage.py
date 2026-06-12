@@ -1,4 +1,5 @@
 from solar_layout.service import SolarService
+import json
 
 example_input = [
  {"x": 0, "y": 0}, {"x": 45.05, "y": 0}, {"x": 90.1, "y": 0},
@@ -10,4 +11,19 @@ example_input = [
 service = SolarService()
 result = service.calculator(example_input)
 
-print(result)
+# print(result)
+
+def print_points(title, points):
+    print(f"\n{title}:")
+
+    for point in points:
+        print(f"  x = {point["x"]}, y = {point["y"]}")
+
+
+service = SolarService()
+result = service.calculator(example_input)
+
+print(json.dumps(result, indent=1))
+
+# print_points("MOUNTS", result["mounts"])
+# print_points("JOINTS", result["joints"])

@@ -10,6 +10,16 @@ class SolarService:
         self.mount_calculator = MountCalculator()
         self.joint_calculator = JointCalculator()
 
+    def sort_points(self, points):  
+        return sorted(points, key=lambda point: (point.y, point.x))
+
+
+    def points_to_dicts(self, points):
+        return [
+            {"x": point.x, "y": point.y}
+            for point in points
+        ]
+
     def calculator(self, coords):
         check_data_integrity(coords)
 
@@ -19,7 +29,6 @@ class SolarService:
         result = {
             "mounts": [],
             "joints": [],
-            "rafters": []
         }
 
         for row in rows:
@@ -27,14 +36,17 @@ class SolarService:
 
             for rafter in rafters:
                 if self.mount_calculator.check_mounts_in_panels(row, rafter):
-                    if rafter not in result["rafters"]:
-                        result["rafters"].append(rafter)
-
                     mounts = self.mount_calculator.create_mounts(row, rafter)
                     result["mounts"].extend(mounts)
-
                     break
+
         joints = self.joint_calculator.calculate_joints(rows)
         result["joints"].extend(joints)
+
+        result["mounts"] = self.sort_points(result["mounts"])
+        result["joints"] = self.sort_points(result["joints"])
+
+        result["mounts"] = self.points_to_dicts(result["mounts"])
+        result["joints"] = self.points_to_dicts(result["joints"])
 
         return result
