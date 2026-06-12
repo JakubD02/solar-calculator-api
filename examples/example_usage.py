@@ -11,8 +11,6 @@ example_input = [
 service = SolarService()
 result = service.calculator(example_input)
 
-# print(result)
-
 def print_points(title, points):
     print(f"\n{title}:")
 
