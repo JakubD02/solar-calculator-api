@@ -21,6 +21,9 @@ class Mount:
         self.x = x
         self.y = y
 
+    def __repr__(self):
+        return f"(x = {self.x} , y = {self.y})"
+
 class Rafter:
     def __init__(self, x):
         self.start_x = x

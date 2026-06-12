@@ -1,4 +1,4 @@
-from solar_layout.models import MountRules
+from solar_layout.models import MountRules, Mount
 
 class MountCalculator:
     EDGE_CLEARANCE = MountRules.EDGE_CLEARANCE
@@ -52,3 +52,20 @@ class MountCalculator:
             all_supports.extend(panel_supports)
         
         return self.check_cantilever_limit(panels, all_supports)
+    
+    def create_mounts(self, panels, rafter_x_positions):
+        mounts = []
+        
+        for panel in panels:
+            panel_supports = self.get_panel_supports(panel, rafter_x_positions)
+            mount_y = round(panel.top_y + panel.height / 2, 2)
+            top_y = round(panel.top_y, 2)
+            bottom_y = round(panel.bottom_y, 2)
+
+            for x in panel_supports:
+                x = round(x, 2)
+
+                mounts.append(Mount(x, top_y))
+                mounts.append(Mount(x, bottom_y))
+                
+        return mounts

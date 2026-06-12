@@ -27,7 +27,11 @@ class SolarService:
 
             for rafter in rafters:
                 if self.mount_calculator.check_mounts_in_panels(row, rafter):
-                    result["rafters"].append(rafter)
+                    if rafter not in result["rafters"]:
+                        result["rafters"].append(rafter)
+
+                    mounts = self.mount_calculator.create_mounts(row, rafter)
+                    result["mounts"].extend(mounts)
                     break
         
         return result

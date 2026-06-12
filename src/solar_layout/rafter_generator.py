@@ -10,7 +10,7 @@ class RafterGenerator:
             x += spacing
 
         while x <= max_x:
-            positions.append(x)
+            positions.append(round(x, 2))
             x += spacing
 
         return positions
