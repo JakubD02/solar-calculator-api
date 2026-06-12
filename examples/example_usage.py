@@ -11,4 +11,3 @@ service = SolarService()
 result = service.calculator(example_input)
 
 print(result)
-print("test")
