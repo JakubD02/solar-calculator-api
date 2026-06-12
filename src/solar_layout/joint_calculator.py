@@ -1,4 +1,4 @@
-from solar_layout.models import JointRules
+from solar_layout.models import JointRules, Joint
 
 class JointCalculator:
     JOINT_GAP_LIMIT = JointRules.GAP_LIMIT
@@ -22,4 +22,33 @@ class JointCalculator:
                 and 0 <= vertical_gap_right < self.JOINT_GAP_LIMIT
                 and 0 <= vertical_gap_left < self.JOINT_GAP_LIMIT
         )
-    
+
+    def create_joints_between_panels(self, left_panel, right_panel):
+        joint_x = round((left_panel.right_x + right_panel.left_x) / 2, 2)
+
+        top_y = round(left_panel.top_y, 2)
+        bottom_y = round(left_panel.bottom_y, 2)
+
+        return [
+            Joint(joint_x, top_y),
+            Joint(joint_x, bottom_y)
+        ]
+
+    def calculate_joints(self, rows):
+        joints = []
+
+        for row in rows:
+            row = sorted(row, key=lambda panel: panel.left_x)
+            for idx in range(len(row) - 1):
+                left_panel = row[idx]
+                right_panel = row[idx + 1]
+
+                if self.requires_joint(left_panel, right_panel):
+                    new_joints = self.create_joints_between_panels(
+                        left_panel,
+                        right_panel
+                    )
+
+                    joints.extend(new_joints)
+
+        return joints

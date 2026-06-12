@@ -23,6 +23,12 @@ class Mount:
 
     def __repr__(self):
         return f"(x = {self.x} , y = {self.y})"
+    
+    def __eq__(self, other):
+        return isinstance(other, Mount) and self.x == other.x and self.y == other.y
+
+    def __hash__(self):
+        return hash((self.x, self.y))
 
 class Rafter:
     def __init__(self, x):
@@ -32,6 +38,16 @@ class Joint:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+    def __repr__(self):
+        return f"(x = {self.x} , y = {self.y})"
+    
+    def __eq__(self, other):
+        return isinstance(other, Joint) and self.x == other.x and self.y == other.y
+
+    def __hash__(self):
+        return hash((self.x, self.y))
+
 
 class MountRules:
     EDGE_CLEARANCE = 2

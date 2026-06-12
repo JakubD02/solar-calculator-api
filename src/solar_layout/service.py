@@ -32,6 +32,9 @@ class SolarService:
 
                     mounts = self.mount_calculator.create_mounts(row, rafter)
                     result["mounts"].extend(mounts)
+
                     break
-        
+        joints = self.joint_calculator.calculate_joints(rows)
+        result["joints"].extend(joints)
+
         return result
