@@ -11,6 +11,7 @@ def sort_key(panel: Panel) -> tuple[float, float]:
     return panel.top_y, panel.left_x
 
 def group_points_by_row(panels: list[Panel]) -> list[list[Panel]]:
+    ROW_TOLERANCE = 0.01
     panels.sort(key=sort_key)
 
     grouped_coords = []
@@ -18,7 +19,7 @@ def group_points_by_row(panels: list[Panel]) -> list[list[Panel]]:
     current_y = panels[0].top_y
 
     for p in panels:
-        if p.top_y  != current_y:
+        if abs(p.top_y - current_y) > ROW_TOLERANCE:
             grouped_coords.append(current_row)
             current_row = []
             current_y = p.top_y
