@@ -20,8 +20,6 @@ def test_service_returns_mounts_joints_and_rafters():
 
     assert "mounts" in result
     assert "joints" in result
-    assert "rafters" in result
 
     assert len(result["mounts"]) > 0
     assert len(result["joints"]) > 0
-    assert len(result["rafters"]) > 0

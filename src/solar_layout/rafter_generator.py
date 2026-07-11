@@ -1,9 +1,9 @@
-from solar_layout.models import RafterRules
+from solar_layout.models import Panel, RafterRules
 
 class RafterGenerator:
     SPACING = RafterRules.SPACING
 
-    def generate_positions(self, start_x, min_x, max_x, spacing=SPACING):
+    def generate_positions(self, start_x: float, min_x: float, max_x: float, spacing: float=SPACING) -> list[float]:
         positions = []
         x = start_x
         while x < min_x:
@@ -15,7 +15,7 @@ class RafterGenerator:
 
         return positions
 
-    def generate_candidates(self, panels, spacing=SPACING):
+    def generate_candidates(self, panels: list[Panel], spacing: float=SPACING) -> list[list[float]]:
         min_x = panels[0].left_x
         max_x = panels[-1].right_x
 

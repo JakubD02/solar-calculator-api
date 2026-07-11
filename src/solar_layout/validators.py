@@ -1,6 +1,6 @@
 from solar_layout.models import Panel
 
-def panels_overlap(panel_1, panel_2):
+def panels_overlap(panel_1: Panel, panel_2: Panel) -> bool:
     return (
         panel_1.left_x < panel_2.right_x
         and panel_1.right_x > panel_2.left_x
@@ -8,7 +8,7 @@ def panels_overlap(panel_1, panel_2):
         and panel_1.bottom_y > panel_2.top_y
     )
 
-def check_data_integrity(coords):
+def check_data_integrity(coords: list[dict[str, float]]) -> None:
     if not isinstance(coords, list):
         raise TypeError("Coordinates must be a list OF POINTS")
     

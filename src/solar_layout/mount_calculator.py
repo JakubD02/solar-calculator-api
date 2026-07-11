@@ -1,11 +1,11 @@
-from solar_layout.models import MountRules, Mount
+from solar_layout.models import MountRules, Mount, Panel
 
 class MountCalculator:
     EDGE_CLEARANCE = MountRules.EDGE_CLEARANCE
     CANTILEVER_LIMIT = MountRules.CANTILEVER_LIMIT
     SPAN_LIMIT = MountRules.SPAN_LIMIT
 
-    def get_panel_supports(self, panel, possible_support_x):
+    def get_panel_supports(self, panel: Panel, possible_support_x: list[float]) -> list[float]:
         panel_supports = []
         for x in possible_support_x:
             if panel.left_x + self.EDGE_CLEARANCE <= x <= panel.right_x - self.EDGE_CLEARANCE:
@@ -13,7 +13,7 @@ class MountCalculator:
 
         return panel_supports
 
-    def check_span_limit(self, supports):
+    def check_span_limit(self, supports: list[float]) -> bool:
         supports.sort()
         for idx in range(len(supports) - 1):
             if supports[idx + 1] - supports[idx] > self.SPAN_LIMIT:
@@ -21,9 +21,9 @@ class MountCalculator:
 
         return True
     
-    def check_cantilever_limit(self, panels, supports):
+    def check_cantilever_limit(self, panels: list[Panel], supports: list[float]) -> bool:
         panels = sorted(panels, key=lambda panel: panel.left_x)
-        supports = sorted(set(supports)) # to remove duplicats
+        supports = sorted(set(supports))
 
         if not supports:
             return False
@@ -37,7 +37,7 @@ class MountCalculator:
         return first_support - left_edge <= self.CANTILEVER_LIMIT and right_edge - last_support <= self.CANTILEVER_LIMIT
 
 
-    def check_mounts_in_panels(self, panels, rafter_x_positions):
+    def check_mounts_in_panels(self, panels: list[Panel], rafter_x_positions: list[float]) -> bool:
         all_supports = []
 
         for panel in panels:
@@ -53,7 +53,7 @@ class MountCalculator:
         
         return self.check_cantilever_limit(panels, all_supports)
 
-    def create_mounts(self, panels, rafter_x_positions):
+    def create_mounts(self, panels: list[Panel], rafter_x_positions: list[float]) -> set[Mount]:
         mounts = set()
         for panel in panels:
             panel_supports = self.get_panel_supports(panel, rafter_x_positions)

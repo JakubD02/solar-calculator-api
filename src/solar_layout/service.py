@@ -3,24 +3,25 @@ from solar_layout.grouping import create_panels, group_points_by_row
 from solar_layout.rafter_generator import RafterGenerator
 from solar_layout.mount_calculator import MountCalculator
 from solar_layout.joint_calculator import JointCalculator
+from solar_layout.models import Joint, Mount
 
 class SolarService:
-    def __init__(self):
+    def __init__(self) -> None:
         self.rafter_generator = RafterGenerator()
         self.mount_calculator = MountCalculator()
         self.joint_calculator = JointCalculator()
 
-    def sort_points(self, points):  
+    def sort_points(self, points: list[Mount | Joint]) -> list[Mount | Joint]:
         return sorted(points, key=lambda point: (point.y, point.x))
 
 
-    def points_to_dicts(self, points):
+    def points_to_dicts(self, points: list[Mount | Joint]) -> list[dict[str, float]]:
         return [
             {"x": point.x, "y": point.y}
             for point in points
         ]
 
-    def calculator(self, coords):
+    def calculator(self, coords: list[dict[str, float]]) -> dict[str, list[dict[str, float]]]:
         check_data_integrity(coords)
 
         panels = create_panels(coords)

@@ -8,20 +8,13 @@ example_input = [
  {"x": 90.1, "y": 143.2}
 ]
 
-service = SolarService()
-result = service.calculator(example_input)
-
-def print_points(title, points):
+def print_points(title: str, points: list[dict[str, float]]) -> None:
     print(f"\n{title}:")
 
     for point in points:
-        print(f"  x = {point["x"]}, y = {point["y"]}")
-
+        print(f"  x = {point['x']}, y = {point['y']}")
 
 service = SolarService()
 result = service.calculator(example_input)
 
 print(json.dumps(result, indent=1))
-
-# print_points("MOUNTS", result["mounts"])
-# print_points("JOINTS", result["joints"])
