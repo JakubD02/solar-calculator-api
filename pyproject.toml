@@ -5,7 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "solar-calculator"
 version = "0.1.0"
-description = "Solar panel layout calculator"
+description = "Solar panel layout calculator with Django REST API"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.0,<6.0",
+    "djangorestframework>=3.15,<4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-django>=4.8",
+    "ruff>=0.5",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

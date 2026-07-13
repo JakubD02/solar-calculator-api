@@ -5,7 +5,6 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --no-cache-dir -e .
-RUN pip install --no-cache-dir djangorestframework
 
 EXPOSE 8000
 
