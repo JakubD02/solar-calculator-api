@@ -1,3 +1,4 @@
+from calculator_api.views import CalculationHistory
 from rest_framework import serializers
 
 class CoordinateSerializer(serializers.Serializer):
@@ -5,3 +6,10 @@ class CoordinateSerializer(serializers.Serializer):
 
     x = serializers.FloatField()
     y = serializers.FloatField()
+
+class CalculationHistorySerializer(serializers.ModelSerializer):
+    '''Serializes a stored calculation for read-only display'''
+
+    class Meta:
+        model = CalculationHistory
+        fields = ["id", "input_data", "result_data"]
