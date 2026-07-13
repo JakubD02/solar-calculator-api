@@ -1,2 +1,6 @@
+from django.db import models
 
-# Create your models here.
+class CalculationHistory(models.Model):
+    """Stores a single calculation request and their result"""
+    input_data = models.JSONField()
+    result_data = models.JSONField()
