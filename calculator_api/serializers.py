@@ -1,4 +1,4 @@
-from calculator_api.views import CalculationHistory
+from calculator_api.models import CalculationHistory
 from rest_framework import serializers
 
 class CoordinateSerializer(serializers.Serializer):

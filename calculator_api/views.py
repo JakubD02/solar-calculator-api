@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CalculationHistorySerializer, CoordinateSerializer
 from solar_layout.service import SolarService
+from django.shortcuts import get_object_or_404
 
 class CalculateLayoutView(APIView):
     def post(self, request):
@@ -24,8 +25,26 @@ class CalculateLayoutView(APIView):
 
         return Response(result, status=status.HTTP_200_OK)
     
-class CalculationHistoryListView(APIView):
+class CalculationListView(APIView):
     def get(self, request):
-        history = CalculationHistory.objects.all()
-        serializer = CalculationHistorySerializer(history, many=True)
+        calculations = CalculationHistory.objects.all()
+        serializer = CalculationHistorySerializer(calculations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class CalculationDetailView(APIView):
+    def get(self, request, pk):
+        calculation = get_object_or_404(CalculationHistory, pk=pk)
+        serializer = CalculationHistorySerializer(calculation)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CalculationMountsView(APIView):
+    def get(self, request, pk):
+        history = get_object_or_404(CalculationHistory, pk=pk)
+        mounts = history.result_data.get("mounts", [])
+        return Response({"mounts": mounts}, status=status.HTTP_200_OK)
+
+class CalculationJointsView(APIView):
+    def get(self, request, pk):
+        history = get_object_or_404(CalculationHistory, pk=pk)
+        joints = history.result_data.get("joints", [])
+        return Response({"joints": joints}, status=status.HTTP_200_OK)

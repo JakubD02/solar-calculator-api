@@ -62,12 +62,15 @@ By default this expects a PostgreSQL database; adjust `DATABASES` in `config/set
 
 ## API Endpoints
 
-| Method | Endpoint              | Description                                  |
-|--------|------------------------|-----------------------------------------------|
-| POST   | `/api/calculate/`      | Calculate mounts and joints for panel coordinates, stores the result |
-| GET    | `/api/calculations/`   | List all previously stored calculations       |
-| GET    | `/api/docs/`            | Interactive Swagger UI documentation           |
-| GET    | `/api/redoc/`           | Alternative ReDoc documentation                |
+| Method | Endpoint                                | Description                                                          |
+|--------|-----------------------------------------|----------------------------------------------------------------------|
+| POST   | `/api/calculate/`                       | Calculate mounts and joints for panel coordinates, stores the result |
+| GET    | `/api/calculations/`                    | List all previously stored calculations                              |
+| GET    | `/api/calculations/{id}/`               | Get a specific calculation by ID                                     |
+| GET    | `/api/calculations/{id}/mounts/`        | Get only mounts from a specific calculation                          |
+| GET    | `/api/calculations/{id}/joints/`        | Get only joints from a specific calculation                          |
+| GET    | `/api/docs/`                            | Interactive Swagger UI documentation                                 |
+| GET    | `/api/redoc/`                           | Alternative ReDoc documentation                                      |
 
 ### Example request
 
