@@ -97,6 +97,9 @@ curl -X POST http://127.0.0.1:8000/api/calculate/ \
 }
 ```
 
+## Screenshot from Swagger
+<img width="1462" height="627" alt="image" src="https://github.com/user-attachments/assets/09b737d8-1f06-40e2-83a5-6f5c9d937268" />
+
 ## Run Tests
 
 With Docker:
