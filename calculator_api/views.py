@@ -37,6 +37,22 @@ class CalculationDetailView(APIView):
         serializer = CalculationHistorySerializer(calculation)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def delete(self, request, pk):
+            calculation = get_object_or_404(CalculationHistory, pk=pk)
+            calculation.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, pk):
+            calculation = get_object_or_404(CalculationHistory, pk=pk)
+            serializer = CalculationHistorySerializer(
+                 calculation,
+                 data=request.data,
+                 partial=True,
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
 class CalculationMountsView(APIView):
     def get(self, request, pk):
         history = get_object_or_404(CalculationHistory, pk=pk)
@@ -48,3 +64,16 @@ class CalculationJointsView(APIView):
         history = get_object_or_404(CalculationHistory, pk=pk)
         joints = history.result_data.get("joints", [])
         return Response({"joints": joints}, status=status.HTTP_200_OK)
+
+
+class CalculationRecalculateView(APIView):
+     def post(self, request, pk):
+        calculation = get_object_or_404(CalculationHistory, pk=pk)
+        service = SolarService()
+        try:
+            result = service.calculator(calculation.input_data)
+        except (TypeError, ValueError) as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        calculation.result_data = result
+        calculation.save()
+        return Response(request, status=status.HTTP_200_OK)

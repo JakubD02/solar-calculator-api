@@ -61,16 +61,18 @@ python manage.py runserver
 By default this expects a PostgreSQL database; adjust `DATABASES` in `config/settings.py` or set the `DB_*` environment variables to match your local setup.
 
 ## API Endpoints
-
 | Method | Endpoint                                | Description                                                          |
 |--------|-----------------------------------------|----------------------------------------------------------------------|
 | POST   | `/api/calculate/`                       | Calculate mounts and joints for panel coordinates, stores the result |
 | GET    | `/api/calculations/`                    | List all previously stored calculations                              |
 | GET    | `/api/calculations/{id}/`               | Get a specific calculation by ID                                     |
+| PATCH  | `/api/calculations/{id}/`               | Partially update a stored calculation                                |
+| DELETE | `/api/calculations/{id}/`               | Delete a stored calculation                                          |
 | GET    | `/api/calculations/{id}/mounts/`        | Get only mounts from a specific calculation                          |
 | GET    | `/api/calculations/{id}/joints/`        | Get only joints from a specific calculation                          |
+| POST   | `/api/calculations/{id}/recalculate/`   | Recalculate an existing entry using its stored input data            |
 | GET    | `/api/docs/`                            | Interactive Swagger UI documentation                                 |
-| GET    | `/api/redoc/`                           | Alternative ReDoc documentation                                      |
+| GET    | `/api/redoc/`                           | Alternative ReDoc documentation                                      |                                 |
 
 ### Example request
 
